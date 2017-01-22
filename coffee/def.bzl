@@ -5,17 +5,29 @@ load('@io_bazel_rules_js//js:def.bzl',
   'js_test')
 
 load('//coffee/private:rules.bzl',
+  'cjsx_srcs',
   'coffee_src',
   'coffee_srcs')
 
 
 def coffee_repositories():
   npm_install('coffee-script', version='1.12.2')
+  npm_install('coffee-react-transform', version='4.0.0')
 
 
 def coffee_library(name, **kwargs):
   src_name = name + '.js_src'
   coffee_srcs(name=src_name, srcs=kwargs.pop('srcs'))
+
+  js_library(
+    name = name,
+    srcs = [src_name],
+    **kwargs)
+
+
+def cjsx_library(name, **kwargs):
+  src_name = name + '.js_src'
+  cjsx_srcs(name=src_name, srcs=kwargs.pop('srcs'))
 
   js_library(
     name = name,
