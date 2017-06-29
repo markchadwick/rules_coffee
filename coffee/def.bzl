@@ -53,3 +53,13 @@ def coffee_test(name, **kwargs):
     name  = name,
     srcs  = [src_name],
     **kwargs)
+
+
+def cjsx_test(name, **kwargs):
+  src_name = name + '.js_src'
+  cjsx_srcs(name=src_name, srcs=kwargs.pop('srcs'))
+
+  js_test(
+    name  = name,
+    srcs  = [src_name],
+    **kwargs)

@@ -21,7 +21,7 @@ def _coffee_compile_dir(ctx, dir, srcs):
     js_name = src.basename.replace('.coffee', '.js')
     output  = ctx.new_file(js_name)
 
-    arguments.append(src.path)
+    arguments.append(src.short_path)
     outputs.append(output)
 
   ctx.action(
@@ -85,7 +85,8 @@ def coffee_compile(ctx, srcs):
   for dir in srcs_by_dir:
     files += _coffee_compile_dir(ctx, dir, srcs_by_dir[dir])
 
-  return struct(files=files)
+  runfiles = ctx.runfiles(collect_default=True)
+  return struct(files=files, runfiles=runfiles)
 
 
 def cjsx_compile(ctx, srcs):
