@@ -114,6 +114,9 @@ def coffee_src_impl(ctx):
 def cjsx_srcs_impl(ctx):
   return cjsx_compile(ctx, ctx.files.srcs)
 
+def cjsx_src_impl(ctx):
+  return cjsx_compile(ctx, ctx.files.src)
+
 # -----------------------------------------------------------------------------
 
 attrs = {
@@ -156,5 +159,12 @@ cjsx_srcs = rule(
   cjsx_srcs_impl,
   attrs = cjsx_attrs + {
     'srcs': attr.label_list(allow_files=cjsx_src_type),
+  },
+)
+
+cjsx_src = rule(
+  cjsx_src_impl,
+  attrs = cjsx_attrs + {
+    'src': attr.label(allow_files=cjsx_src_type),
   },
 )

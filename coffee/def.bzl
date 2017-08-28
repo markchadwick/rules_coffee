@@ -5,6 +5,7 @@ load('@io_bazel_rules_js//js:def.bzl',
   'js_test')
 
 load('//coffee/private:rules.bzl',
+  'cjsx_src',
   'cjsx_srcs',
   'coffee_src',
   'coffee_srcs')
@@ -32,6 +33,16 @@ def cjsx_library(name, **kwargs):
   js_library(
     name = name,
     srcs = [src_name],
+    **kwargs)
+
+
+def cjsx_binary(name, **kwargs):
+  src_name = name + '.js_src'
+  cjsx_src(name=src_name, src=kwargs.pop('src'))
+
+  js_binary(
+    name = name,
+    src  = src_name,
     **kwargs)
 
 
